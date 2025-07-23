@@ -10,9 +10,10 @@ import {
     MobileNavToggle,
     MobileNavMenu,
 } from "@/components/ui/resizable-navbar";
+import { usePathname } from "next/navigation";
 import { useState } from "react";
 
-export function Navbar2() {
+export function Navbar2({fname}) {
     const navItems = [
         {
             name: "Home",
@@ -29,16 +30,18 @@ export function Navbar2() {
     ];
 
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const pathname = usePathname()
 
-    return (
+    return pathname.startsWith("/user")?<></> : (
       <Navbar className="h-0">
         {/* Desktop Navigation */}
         <NavBody>
-          <NavbarLogo />
+
+          <NavbarLogo  />
           <NavItems items={navItems} />
           <div className="flex items-center gap-4">
-            <NavbarButton variant="secondary">Login</NavbarButton>
-            <NavbarButton variant="primary">Book a call</NavbarButton>
+            <NavbarButton href={fname?"/user":"/login"} variant="primary">{fname?"Hi,"+fname:"Login"}</NavbarButton>
+            {/* <NavbarButton variant="primary"></NavbarButton> */}
           </div>
         </NavBody>
 
@@ -72,6 +75,7 @@ export function Navbar2() {
                 variant="primary"
                 className="w-full"
               >
+                {/* {fname?fname:"Login"} */}
                 Login
               </NavbarButton>
               <NavbarButton

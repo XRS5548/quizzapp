@@ -6,6 +6,9 @@ import { Navbar1 } from "@/components/personal/Navbar";
 import HeroSection from "@/components/personal/Hero";
 import Header from "@/components/personal/Header";
 import NextTopLoader from "nextjs-toploader";
+import { Toaster } from "sonner";
+import { cookies } from "next/headers";
+import { connection } from "next/server";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -24,12 +27,17 @@ export const metadata = {
 
 export default async function RootLayout({ children }) {
 
+  // connection()
+  let cookie = await cookies()
+  let fname = cookie.get("fname")?.value
+  console.log(fname)
   
   return (
     <html lang="en" suppressHydrationWarning>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Toaster />
         <NextTopLoader color="#fff" />
         <ThemeProvider
           attribute="class"
@@ -37,7 +45,7 @@ export default async function RootLayout({ children }) {
           enableSystem
           disableTransitionOnChange
         >
-         <Header />
+         <Header fname={fname} />
 
 
           {children}

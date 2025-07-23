@@ -27,7 +27,7 @@ export const Card = React.memo(
       <img
         src={card.src}
         alt={card.title}
-        className="object-cover absolute inset-0"
+        className="object-cover absolute h-full w-full inset-0"
       />
       <div
         className={cn(
@@ -57,7 +57,7 @@ export function FocusCards({ cards }: { cards: Card[] }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-4 gap-10  md:px-8 w-full">
       {cards.map((card, index) => (
-        <Link key={card.id} href={"/q/"+card.id} >
+        <Link key={card.id} href={"/play/"+card.id} >
           <Card            
             card={card}
             index={index}
