@@ -96,7 +96,8 @@ export function MyQuizzesTable() {
     {
       id: "select",
       header: ({ table }) => (
-        <Checkbox
+        <Checkbox 
+        className={""}
           checked={
             table.getIsAllPageRowsSelected() ||
             (table.getIsSomePageRowsSelected() && "indeterminate")
@@ -107,6 +108,7 @@ export function MyQuizzesTable() {
       ),
       cell: ({ row }) => (
         <Checkbox
+        className={""}
           checked={row.getIsSelected()}
           onCheckedChange={(value) => row.toggleSelected(!!value)}
           aria-label="Select row"
@@ -118,7 +120,7 @@ export function MyQuizzesTable() {
     {
       accessorKey: "title",
       header: ({ column }) => (
-        <Button
+        <Button className={""} size={"lg"}
           variant="ghost"
           onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}
         >
@@ -170,15 +172,15 @@ export function MyQuizzesTable() {
         return (
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm">
+              <Button className={""} variant="outline" size="sm">
                 Actions <ChevronDown className="ml-1 h-4 w-4" />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuLabel>Actions</DropdownMenuLabel>
-              <DropdownMenuItem onClick={handleView}>View</DropdownMenuItem>
-              <DropdownMenuItem onClick={handleEdit}>Edit</DropdownMenuItem>
-              <DropdownMenuItem onClick={handleDelete}>Delete</DropdownMenuItem>
+            <DropdownMenuContent className={""} align="end">
+              <DropdownMenuLabel inset={true} className={""}>Actions</DropdownMenuLabel>
+              <DropdownMenuItem inset={true} className={""} onClick={handleView}>View</DropdownMenuItem>
+              <DropdownMenuItem inset={true} className={""} onClick={handleEdit}>Edit</DropdownMenuItem>
+              <DropdownMenuItem inset={true} className={""} onClick={handleDelete}>Delete</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         )
@@ -213,6 +215,7 @@ export function MyQuizzesTable() {
       <div className="w-full">
         <div className="flex items-center py-4">
           <Input
+          type="search"
             placeholder="Filter quizzes by title..."
             value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
             onChange={(event) =>
@@ -222,11 +225,11 @@ export function MyQuizzesTable() {
           />
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" className="ml-auto">
+              <Button size={"lg"} variant="outline" className="ml-auto">
                 Columns <ChevronDown />
               </Button>
             </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
+            <DropdownMenuContent className={""} align="end">
               {table
                 .getAllColumns()
                 .filter((column) => column.getCanHide())
@@ -245,12 +248,12 @@ export function MyQuizzesTable() {
         </div>
 
         <div className="rounded-md border">
-          <Table>
-            <TableHeader>
+          <Table className={""}>
+            <TableHeader className={""}>
               {table.getHeaderGroups().map((headerGroup) => (
-                <TableRow key={headerGroup.id}>
+                <TableRow className={""} key={headerGroup.id}>
                   {headerGroup.headers.map((header) => (
-                    <TableHead key={header.id}>
+                    <TableHead className={""} key={header.id}>
                       {header.isPlaceholder
                         ? null
                         : flexRender(
@@ -262,19 +265,19 @@ export function MyQuizzesTable() {
                 </TableRow>
               ))}
             </TableHeader>
-            <TableBody>
+            <TableBody className={""}>
               {table.getRowModel().rows.length ? (
                 table.getRowModel().rows.map((row) => (
-                  <TableRow key={row.id} data-state={row.getIsSelected() && "selected"}>
+                  <TableRow className={""} key={row.id} data-state={row.getIsSelected() && "selected"}>
                     {row.getVisibleCells().map((cell) => (
-                      <TableCell key={cell.id}>
+                      <TableCell className={""} key={cell.id}>
                         {flexRender(cell.column.columnDef.cell, cell.getContext())}
                       </TableCell>
                     ))}
                   </TableRow>
                 ))
               ) : (
-                <TableRow>
+                <TableRow className={""}>
                   <TableCell colSpan={columns.length} className="h-24 text-center">
                     No quizzes found.
                   </TableCell>
@@ -291,6 +294,7 @@ export function MyQuizzesTable() {
           </div>
           <div className="space-x-2">
             <Button
+            className={""}
               variant="outline"
               size="sm"
               onClick={() => table.previousPage()}
@@ -299,6 +303,7 @@ export function MyQuizzesTable() {
               Previous
             </Button>
             <Button
+            className={""}
               variant="outline"
               size="sm"
               onClick={() => table.nextPage()}

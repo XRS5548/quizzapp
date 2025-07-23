@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
 import {
@@ -7,107 +8,18 @@ import {
   IconPlusEqual,
   IconPuzzle,
   IconSatellite,
-  IconSettings,
-  IconUser,
   IconUserBolt,
 } from "@tabler/icons-react";
 import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
-import { Component } from "lucide-react";
 import { usePathname } from "next/navigation";
 import Logout from "@/components/admin/logout";
 import { MyQuizzesTable } from "@/components/admin/MyQuizzs";
 import CreateQuizForm from "@/components/admin/CreateQuizz";
+import Image from "next/image";
 
-export default function SidebarDemo() {
-  const links = [
-    {
-      label: "Dashboard",
-      href: "/user/dashboard",
-      icon: (
-        <IconBrandTabler className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
-      ),
-    },
-    {
-      label: "Profile",
-      href: "/user/profile",
-      icon: (
-        <IconUserBolt className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
-      ),
-    },
-    
-    {
-      label: "Create Quizz",
-      href: "/user/createquizz",
-      icon: (
-        <IconPlusEqual className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
-      ),
-    },
-    {
-      label: "MyQuizzs",
-      href: "/user/myquizz",
-      icon: (
-        <IconPuzzle className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
-      ),
-    },
-     {
-      label: "Portfoliyo",
-      href: "/user/portfoliyo",
-      icon: (
-        <IconSatellite className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
-      ),
-    },
-    {
-      label: "Logout",
-      href: "/user/logout",
-      icon: (
-        <IconArrowLeft className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />
-      ),
-    },
-  ];
-  const pathname = usePathname()
-  const [open, setOpen] = useState(false);
-  return (
-    <div
-      className={cn(
-        "mx-auto flex flex-1 flex-col overflow-hidden rounded-md border border-neutral-200 bg-gray-100 md:flex-row dark:border-neutral-700 dark:bg-neutral-800",
-        "h-screen", // for your use case, use `h-screen` instead of `h-[60vh]`
-      )}
-    >
-      <Sidebar open={open} setOpen={setOpen}>
-        <SidebarBody className="justify-between gap-10">
-          <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto">
-            {open ? <Logo /> : <LogoIcon />}
-            <div className="mt-8 flex flex-col gap-2">
-              {links.map((link, idx) => (
-                <SidebarLink className={pathname.startsWith(link.href) ?"border-b hover:bg-blue-600 p-2":"p-2 hover:bg-slate-700"} key={idx} link={link} />
-              ))}
-            </div>
-          </div>
-          <div>
-            <SidebarLink
-              link={{
-                label: "Manu Arora",
-                href: "#",
-                icon: (
-                  <img
-                    src="https://assets.aceternity.com/manu.png"
-                    className="h-7 w-7 shrink-0 rounded-full"
-                    width={50}
-                    height={50}
-                    alt="Avatar"
-                  />
-                ),
-              }}
-            />
-          </div>
-        </SidebarBody>
-      </Sidebar>
-      <Dashboard />
-    </div>
-  );
-}
-export const Logo = () => {
+// Moved Logo & LogoIcon here since page files should not export named components
+const Logo = () => {
   return (
     <a
       href="#"
@@ -124,7 +36,8 @@ export const Logo = () => {
     </a>
   );
 };
-export const LogoIcon = () => {
+
+const LogoIcon = () => {
   return (
     <a
       href="#"
@@ -135,48 +48,129 @@ export const LogoIcon = () => {
   );
 };
 
+export default function SidebarDemo() {
+  const links = [
+    {
+      label: "Dashboard",
+      href: "/user/dashboard",
+      icon: <IconBrandTabler className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
+    },
+    {
+      label: "Profile",
+      href: "/user/profile",
+      icon: <IconUserBolt className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
+    },
+    {
+      label: "Create Quizz",
+      href: "/user/createquizz",
+      icon: <IconPlusEqual className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
+    },
+    {
+      label: "MyQuizzs",
+      href: "/user/myquizz",
+      icon: <IconPuzzle className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
+    },
+    {
+      label: "Portfoliyo",
+      href: "/user/portfoliyo",
+      icon: <IconSatellite className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
+    },
+    {
+      label: "Logout",
+      href: "/user/logout",
+      icon: <IconArrowLeft className="h-5 w-5 shrink-0 text-neutral-700 dark:text-neutral-200" />,
+    },
+  ];
 
+  const pathname = usePathname();
+  const [open, setOpen] = useState(false);
 
+  return (
+    <div
+      className={cn(
+        "mx-auto flex flex-1 flex-col overflow-hidden rounded-md border border-neutral-200 bg-gray-100 md:flex-row dark:border-neutral-700 dark:bg-neutral-800",
+        "h-screen"
+      )}
+    >
+      <Sidebar open={open} setOpen={setOpen}>
+        <SidebarBody className="justify-between gap-10">
+          <div className="flex flex-1 flex-col overflow-x-hidden overflow-y-auto">
+            {open ? <Logo /> : <LogoIcon />}
+            <div className="mt-8 flex flex-col gap-2">
+              {links.map((link, idx) => (
+                <SidebarLink
+                  className={
+                    pathname.startsWith(link.href)
+                      ? "border-b hover:bg-blue-600 p-2"
+                      : "p-2 hover:bg-slate-700"
+                  }
+                  key={idx}
+                  link={link}
+                />
+              ))}
+            </div>
+          </div>
+          <div>
+            <SidebarLink
+              link={{
+                label: "Manu Arora",
+                href: "#",
+                icon: (
+                  <Image
+                    src="https://assets.aceternity.com/manu.png"
+                    className="h-7 w-7 shrink-0 rounded-full"
+                    width={28}
+                    height={28}
+                    alt="Avatar"
+                  />
+                ),
+              }}
+            />
+          </div>
+        </SidebarBody>
+      </Sidebar>
+      <Dashboard />
+    </div>
+  );
+}
 
-let paths = [
+const paths = [
   {
     path: "/user/dashboard",
-    Component :<>Dashboard</>
+    Component: <>Dashboard</>,
   },
   {
     path: "/user/profile",
-    Component :<>Profile</>
+    Component: <>Profile</>,
   },
   {
     path: "/user/createquizz",
-    Component :<CreateQuizForm />
+    Component: <CreateQuizForm />,
   },
-   {
+  {
     path: "/user/myquizz",
-    Component :<MyQuizzesTable />
-  }, {
-    path: "/user/portfoliyo",
-    Component :<>My portfoliyo</>
+    Component: <MyQuizzesTable />,
   },
-   {
+  {
+    path: "/user/portfoliyo",
+    Component: <>My portfoliyo</>,
+  },
+  {
     path: "/user/logout",
-    Component :<Logout />
-  }
-]
+    Component: <Logout />,
+  },
+];
 
-
-
-// Dummy dashboard component with content
 const Dashboard = () => {
-  const pathname = usePathname()
+  const pathname = usePathname();
   return (
-    <div className="border-white border w-full p-4 max-h-screen overflow-scroll" >
-      {
-        paths.map((path)=>{
-          if(pathname.startsWith(path.path))
-            return (path.Component)
-        })
-      }
+    <div className="border-white border w-full p-4 max-h-screen overflow-scroll">
+      {paths.map((path, i) => {
+        if (pathname.startsWith(path.path)) {
+          return <React.Fragment key={i}>{path.Component}</React.Fragment>;
+        }
+        return null;
+      })}
     </div>
   );
 };

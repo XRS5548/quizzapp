@@ -146,7 +146,7 @@ export default function QuizPlayPage() {
       <h1 className="text-3xl font-bold">{quiz.title}</h1>
       <p className="text-muted-foreground">{quiz.description}</p>
 
-      <Card>
+      <Card className={""}>
         <CardContent className="pt-6 space-y-4">
           <h2 className="text-xl font-semibold">
             Q{currentQuestionIndex + 1}: {currentQ.questionText}
@@ -178,6 +178,8 @@ export default function QuizPlayPage() {
 
       <div className="flex justify-between pt-4">
         <Button
+        size={'lg'}
+        className={""}
           variant="outline"
           disabled={currentQuestionIndex === 0}
           onClick={() => setCurrentQuestionIndex(i => i - 1)}
@@ -186,11 +188,11 @@ export default function QuizPlayPage() {
         </Button>
 
         {currentQuestionIndex < totalQuestions - 1 ? (
-          <Button onClick={() => setCurrentQuestionIndex(i => i + 1)}>
+          <Button size={'lg'} className={""} variant={'default'} onClick={() => setCurrentQuestionIndex(i => i + 1)}>
             Next
           </Button>
         ) : (
-          <Button onClick={handleSubmit} disabled={submitting}>
+          <Button size={'lg'} className={""} variant={'default'} onClick={handleSubmit} disabled={submitting}>
             {submitting ? "Submitting..." : "Submit Quiz"}
           </Button>
         )}

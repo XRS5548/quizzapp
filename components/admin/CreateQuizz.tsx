@@ -83,17 +83,17 @@ export default function CreateQuizForm() {
 
   return (
     <div className="">
-      <Card>
-        <CardHeader>
-          <CardTitle>Create New Quiz</CardTitle>
+      <Card className={""}>
+        <CardHeader className={""}>
+          <CardTitle className={""}>Create New Quiz</CardTitle>
         </CardHeader>
-        <CardContent>
+        <CardContent className={""}>
           <form onSubmit={handleSubmit}>
             <div className="space-y-8">
               {/* Quiz Info */}
               <div className="space-y-4">
-                <Label htmlFor="quiz-title">Quiz Title</Label>
-                <Input
+                <Label className={""} htmlFor="quiz-title">Quiz Title</Label>
+                <Input type={"text"} className={""}
                   id="quiz-title"
                   value={quizTitle}
                   onChange={(e) => setQuizTitle(e.target.value)}
@@ -101,8 +101,8 @@ export default function CreateQuizForm() {
                   required
                 />
 
-                <Label htmlFor="quiz-description">Description</Label>
-                <Textarea
+                <Label className={""} htmlFor="quiz-description">Description</Label>
+                <Textarea className={""}
                   id="quiz-description"
                   value={quizDescription}
                   onChange={(e) => setQuizDescription(e.target.value)}
@@ -111,7 +111,7 @@ export default function CreateQuizForm() {
                 />
               </div>
 
-              <Separator />
+              <Separator className={""} />
 
               {/* Dynamic Questions */}
               {questions.map((q, qIndex) => (
@@ -119,8 +119,8 @@ export default function CreateQuizForm() {
                   <h3 className="text-lg font-semibold">Question {qIndex + 1}</h3>
 
                   <div className="space-y-2">
-                    <Label>Question Text</Label>
-                    <Input
+                    <Label className={""}>Question Text</Label>
+                    <Input type={"text"} className={""}
                       value={q.questionText}
                       onChange={(e) =>
                         handleQuestionChange(qIndex, "questionText", e.target.value)
@@ -132,8 +132,8 @@ export default function CreateQuizForm() {
 
                   {["A", "B", "C", "D"].map((label, oIndex) => (
                     <div key={oIndex} className="space-y-2">
-                      <Label>Option {label}</Label>
-                      <Input
+                      <Label className={""}>Option {label}</Label>
+                      <Input type={"text"} className={""}
                         value={q.options[oIndex]}
                         onChange={(e) => handleOptionChange(qIndex, oIndex, e.target.value)}
                         placeholder={`Enter option ${label}`}
@@ -143,7 +143,7 @@ export default function CreateQuizForm() {
                   ))}
 
                   <div className="space-y-2">
-                    <Label>Correct Answer</Label>
+                    <Label className={""}>Correct Answer</Label>
                     <Select
                       value={q.correctAnswer}
                       onValueChange={(val) =>
@@ -154,9 +154,9 @@ export default function CreateQuizForm() {
                       <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select correct option" />
                       </SelectTrigger>
-                      <SelectContent>
+                      <SelectContent className={""}>
                         {["A", "B", "C", "D"].map((opt, i) => (
-                          <SelectItem key={opt} value={opt}>
+                          <SelectItem className={""} key={opt} value={opt}>
                             Option {opt}
                           </SelectItem>
                         ))}
@@ -166,7 +166,7 @@ export default function CreateQuizForm() {
                 </div>
               ))}
 
-              <Button
+              <Button size={"lg"}
                 type="button"
                 variant="outline"
                 onClick={addNewQuestion}
@@ -176,7 +176,7 @@ export default function CreateQuizForm() {
               </Button>
 
               <div className="flex justify-end pt-6">
-                <Button type="submit">Create Quiz</Button>
+                <Button size={"lg"} variant={"default"} className={""} type="submit">Create Quiz</Button>
               </div>
             </div>
           </form>

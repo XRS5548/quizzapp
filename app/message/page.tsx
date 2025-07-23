@@ -17,10 +17,10 @@ export default function ErrorPage() {
           {parms.get("msg")}
         </p>
         <div className="flex gap-4">
-          <Button variant="secondary" onClick={() => router.back()}>
+          <Button className={""} size={"lg"} variant="secondary" onClick={() => router.back()}>
             Retry
           </Button>
-          <Button onClick={() => router.push("/")}>Go to Home</Button>
+          <Button variant={'default'} className={""} size={"lg"} onClick={() => router.push("/")}>Go to Home</Button>
         </div>
       </div>
     </div>

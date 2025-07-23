@@ -156,7 +156,7 @@ export default function ABOUTSECTION() {
             Why HiQuizz Exists
           </h2>
           <p className="text-muted-foreground">
-            HiQuizz isn't just another quiz platform. We're here to make
+            HiQuizz is not just another quiz platform. We are here to make
             learning exciting, fair, and empowering for everyone—students,
             educators, and creators alike.
           </p>
@@ -173,9 +173,9 @@ export default function ABOUTSECTION() {
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Select a core value" />
                 </SelectTrigger>
-                <SelectContent>
+                <SelectContent className={""}>
                   {companyValues.map((value) => (
-                    <SelectItem key={value.id} value={value.id}>
+                    <SelectItem className={""} key={value.id} value={value.id}>
                       <div className="flex items-center gap-2">
                         <value.icon className={cn("h-4 w-4", value.color)} />
                         <span>{value.name}</span>
@@ -292,7 +292,7 @@ export default function ABOUTSECTION() {
           <p className="text-muted-foreground mx-auto mb-6 max-w-2xl">
             Ready to discover a smarter, more fun way to learn?
           </p>
-          <Button variant="default" size="lg" asChild>
+          <Button className={""} variant="default" size="lg" asChild>
             <Link href="/quizs">Start Your Quiz Journey</Link>
           </Button>
         </div>

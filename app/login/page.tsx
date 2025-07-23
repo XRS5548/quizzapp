@@ -67,13 +67,13 @@ export default function LoginForm() {
 
         <form className="my-8" onSubmit={handleLogin}>
           <LabelInputContainer className="mb-4">
-            <Label htmlFor="email">Email Address</Label>
-            <Input id="email" name="email" placeholder="yourname@example.com" type="email" required />
+            <Label className={""} htmlFor="email">Email Address</Label>
+            <Input className={""} id="email" name="email" placeholder="yourname@example.com" type="email" required />
           </LabelInputContainer>
 
           <LabelInputContainer className="mb-6">
-            <Label htmlFor="password">Password</Label>
-            <Input id="password" name="password" placeholder="••••••••" type="password" required />
+            <Label className={""} htmlFor="password">Password</Label>
+            <Input className={""} id="password" name="password" placeholder="••••••••" type="password" required />
           </LabelInputContainer>
 
           {/* {error && <p className="text-sm text-red-500 mb-4">{error}</p>} */}

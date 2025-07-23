@@ -19,11 +19,20 @@ export default function SignupFormDemo() {
   </>)
   let [buttonDisabled, setButtonDisabled] = useState(false)
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setButtonDisabled(true);
-    setButtonContent(<LoaderOne  />)
-    e.target.submit()
-  };
+  e.preventDefault();
+
+  setButtonDisabled(true);
+  setButtonContent(<LoaderOne />);
+
+  const form = e.currentTarget;
+  if (form.checkValidity()) {
+    form.submit(); // safest way to trigger native form submission
+  } else {
+    setButtonDisabled(false);
+    setButtonContent(<>Submit</>);
+  }
+};
+
   return (
     <div className="flex justify-center items-center min-h-screen">
       <div className="shadow-input mx-auto w-full max-w-md rounded-none bg-white p-4 md:rounded-2xl md:p-8 dark:bg-black">
