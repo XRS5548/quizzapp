@@ -5,6 +5,9 @@ import { usePathname } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
 import { toast } from 'sonner'
+import { useRouter } from 'next/navigation'
+import Link from 'next/link'
+import { LoaderThree } from '@/components/ui/loader'
 
 // Utility function for conditional classNames
 function cn(...classes: (string | undefined | false)[]) {
@@ -26,10 +29,13 @@ interface QuizData {
 export default function QuizPlayPage() {
   const pathname = usePathname()
   const id = pathname.split('/').pop()
+  const router = useRouter()
   const [quiz, setQuiz] = useState<QuizData | null>(null)
   const [selectedOptions, setSelectedOptions] = useState<Record<number, string>>({})
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0)
   const [submitting, setSubmitting] = useState(false)
+  const [alreadyPlayed, setAlreadyPlayed] = useState(false)
+
 
   useEffect(() => {
     async function fetchQuiz() {
@@ -40,11 +46,23 @@ export default function QuizPlayPage() {
           body: JSON.stringify({ id })
         })
         const data = await res.json()
-        setQuiz(data)
+        setInterval(() => {
+
+          console.log(data.error == "You have already played this quiz")
+          if (data.error == "You have already played this quiz") {
+            setAlreadyPlayed(true)
+            return
+          }
+          setQuiz(data)
+        }, 2000);
+
       } catch (err) {
+
         console.error('Failed to load quiz', err)
       }
     }
+
+
 
     if (id) fetchQuiz()
   }, [id])
@@ -71,12 +89,15 @@ export default function QuizPlayPage() {
       })
 
       const result = await res.json()
-
+      console.log(result)
       if (res.ok) {
         toast("Quiz Submitted", {
           description: result.message || "Your answers have been submitted!",
         })
-      } else {
+        router.push("/user/profoliyo")
+      }
+
+      else {
         toast("Submission Failed", {
           description: result.error || "Something went wrong",
         })
@@ -90,13 +111,37 @@ export default function QuizPlayPage() {
     }
   }
 
-  if (!quiz) return <div className="p-6 text-center">Loading Quiz...</div>
+  if (alreadyPlayed) {
+    return <div className='flex min-h-screen justify-center items-center'>
+      <div className='flex flex-col gap-3'>
+        <h1 className="text-5xl border-b-4 border-white pb-2 ">You Already Played this Quizz</h1>
+        <p className='text-center text-lg'>try another one for a chance to win</p>
+        <div className='flex justify-center'>
+          <Link href={'/quizs'} className='text-center' >
+            <Button className={""} size={'lg'} variant={'default'}> Go Back</Button>
+          </Link>
+        </div>
+      </div>
+    </div>
+
+  }
+  else if (!quiz) {
+    return <div className="p-6 text-center flex justify-center items-center min-h-screen">
+      <LoaderThree />
+    </div>
+  }
 
   const currentQ = quiz.questions[currentQuestionIndex]
   const selected = selectedOptions[currentQuestionIndex]
   const totalQuestions = quiz.questions.length
 
-  return (
+  return alreadyPlayed ? <div className='flex min-h-screen justify-center items-center'>
+    <div>
+
+      <h1 className="text-5xl">You Already Played this Quizz</h1>
+      <p>try another one for a chance to win</p>
+    </div>
+  </div> : (
     <div className="max-w-3xl mt-20 mx-auto px-4 py-8 space-y-6">
       <h1 className="text-3xl font-bold">{quiz.title}</h1>
       <p className="text-muted-foreground">{quiz.description}</p>

@@ -28,15 +28,40 @@ export async function POST(request:NextRequest) {
     }
 
     let percentage = (score / totalQuesions) * 100;
+    let pass = (percentage >= 50) ? true : false
+
+
+    // get userid 
+    let cookie = request.cookies
+    if(cookie && cookie.get('id')&& cookie.get('id').value !==""){
+
+    }
+    else {
+        return NextResponse.json({
+            error:"You must be logged in to submit your answers",
+        },{
+            status:401
+        })
+    }
+    let userId = cookie.get('id').value
 
 
 
-
-    return NextResponse.json({
+    let ReadyData = {
         score:score,
         total:totalQuesions,
         percentage:percentage.toFixed(2),
-    } ,{
+        pass:pass,
+        userId: new ObjectId(userId),
+        quizId:new ObjectId(quizId)
+
+    }
+
+    let plays = db.collection("plays")
+    let result = await plays.insertOne(ReadyData)
+
+
+    return NextResponse.json( result ,{
         status:200
     })
 }
