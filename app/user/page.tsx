@@ -7,7 +7,7 @@ import {LoaderThree } from "@/components/ui/loader";
 
 export default function page() {
     setTimeout(() => {
-        window.location.replace("/user/dashboard") 
+        location.replace("/user/dashboard") 
         
     }, 5000);
   return (

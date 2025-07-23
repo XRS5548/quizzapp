@@ -33,7 +33,7 @@ export default function LoginForm() {
       if (!res.ok) throw new Error(data.error || "Login failed");
 
       if(data.message && data.message === "success"){
-        router.push("/")
+        location.replace("/")
       }
       else{
         toast.error("Login Failed",{
