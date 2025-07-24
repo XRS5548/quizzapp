@@ -17,6 +17,9 @@ import Logout from "@/components/admin/logout";
 import { MyQuizzesTable } from "@/components/admin/MyQuizzs";
 import CreateQuizForm from "@/components/admin/CreateQuizz";
 import Image from "next/image";
+import DashboardUser from "@/components/admin/Dashboard";
+import PortfoliyoUser from "@/components/admin/Portfoliyo";
+import ProfileUser from "@/components/admin/ProfileUser";
 
 // Moved Logo & LogoIcon here since page files should not export named components
 const Logo = () => {
@@ -137,11 +140,11 @@ export default function SidebarDemo() {
 const paths = [
   {
     path: "/user/dashboard",
-    Component: <>Dashboard</>,
+    Component: <DashboardUser />,
   },
   {
     path: "/user/profile",
-    Component: <>Profile</>,
+    Component: <ProfileUser />,
   },
   {
     path: "/user/createquizz",
@@ -153,7 +156,7 @@ const paths = [
   },
   {
     path: "/user/portfoliyo",
-    Component: <>My portfoliyo</>,
+    Component: <PortfoliyoUser />,
   },
   {
     path: "/user/logout",
