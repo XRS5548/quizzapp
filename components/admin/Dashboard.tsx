@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Card,
   CardContent,
@@ -10,19 +10,55 @@ import {
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { Trophy, BookOpen, PlayCircle } from "lucide-react";
+import { LoaderThree } from "../ui/loader";
 
 export default function DashboardUser() {
-  // Dummy stats
-  const totalPlays = 124;
-  const totalWins = 36;
-  const totalCreated = 7;
+  const [quizzes, setQuizzes] = useState<any[]>([]);
+  const [plays, setPlays] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
-  // Dummy quizzes
-  const quizzes = [
-    { title: "JavaScript Basics", plays: 45, wins: 10, date: "2025-07-20" },
-    { title: "React Advanced", plays: 30, wins: 12, date: "2025-07-18" },
-    { title: "CSS Tricks", plays: 20, wins: 8, date: "2025-07-15" },
-  ];
+  // These stats will be calculated
+  const totalCreated = quizzes.length;
+  const totalPlays = plays.length;
+  const totalWins = plays.filter((p) => p.pass).length;
+
+  useEffect(() => {
+    const token = localStorage.getItem("token"); // or use cookie if needed
+
+    const fetchData = async () => {
+      try {
+        const [quizRes, playRes] = await Promise.all([
+          fetch("/api/user-quizzes", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token }),
+          }),
+          fetch("/api/user-plays", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ token }),
+          }),
+        ]);
+
+        const quizzesData = await quizRes.json();
+        const playsData = await playRes.json();
+
+        setQuizzes(quizzesData || []);
+        setPlays(playsData || []);
+      } catch (error) {
+        console.error("Failed to fetch data:", error);
+      } finally {
+        setTimeout(() => {
+          setLoading(false);
+          
+        }, 2000);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (loading) return <div className="p-6 flex min-h-screen justify-center items-center"><LoaderThree /></div>;
 
   return (
     <div className="p-6 space-y-6">
@@ -76,19 +112,25 @@ export default function DashboardUser() {
             </TableRow>
           </TableHeader>
           <TableBody className={""}>
-            {quizzes.map((quiz, index) => (
-              <TableRow className={""} key={index}>
-                <TableCell className="font-medium">{quiz.title}</TableCell>
-                <TableCell className={""}>{quiz.plays}</TableCell>
-                <TableCell className={""}>{quiz.wins}</TableCell>
-                <TableCell className={""}>{quiz.date}</TableCell>
-                <TableCell className={""}>
-                  <Badge className={""} variant="outline">
-                    {quiz.plays > 20 ? "Active" : "New"}
-                  </Badge>
-                </TableCell>
-              </TableRow>
-            ))}
+            {quizzes.map((quiz, index) => {
+              const quizId = quiz._id;
+              const quizPlays = plays.filter((p) => p.quizId === quizId || p.quizId?._id === quizId);
+              const quizWins = quizPlays.filter((p) => p.pass);
+
+              return (
+                <TableRow className={""} key={index}>
+                  <TableCell className="font-medium">{quiz.title}</TableCell>
+                  <TableCell className={""}>{quizPlays.length}</TableCell>
+                  <TableCell className={""}>{quizWins.length}</TableCell>
+                  <TableCell className={""}>{new Date(quiz.createdAt).toLocaleDateString()}</TableCell>
+                  <TableCell className={""}>
+                    <Badge className={""} variant="outline">
+                      {quizPlays.length > 5 ? "Active" : "New"}
+                    </Badge>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
       </div>
