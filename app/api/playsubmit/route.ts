@@ -53,7 +53,8 @@ export async function POST(request:NextRequest) {
         percentage:percentage.toFixed(2),
         pass:pass,
         userId: new ObjectId(userId),
-        quizId:new ObjectId(quizId)
+        quizId:new ObjectId(quizId),
+        createdAt: new Date()
 
     }
 
