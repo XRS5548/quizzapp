@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Sidebar, SidebarBody, SidebarLink } from "@/components/ui/sidebar";
 import {
   IconArrowLeft,
@@ -87,6 +87,17 @@ export default function SidebarDemo() {
 
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
+  const [useinfo, setUserinfo] = useState(null)
+
+  useEffect(function () {
+    async function fetchuserinfo() {
+      let userinfo = await fetch("/api/userinfo")
+      let info = await userinfo.json()
+      setUserinfo(info)
+    }
+    fetchuserinfo()
+  }, [])
+
 
   return (
     <div
@@ -116,17 +127,17 @@ export default function SidebarDemo() {
           <div>
             <SidebarLink
               link={{
-                label: "Manu Arora",
-                href: "#",
-                icon: (
-                  <Image
-                    src="https://assets.aceternity.com/manu.png"
-                    className="h-7 w-7 shrink-0 rounded-full"
-                    width={28}
-                    height={28}
-                    alt="Avatar"
-                  />
-                ),
+                label: useinfo?`${useinfo.fname} ${useinfo.lname}`:"User",
+            href: "/user/profile",
+            icon: (
+            <Image
+              src={useinfo?useinfo.image:"https://assets.aceternity.com/manu.png"}
+              className="h-7 w-7 shrink-0 rounded-full"
+              width={28}
+              height={28}
+              alt="Avatar"
+            />
+            ),
               }}
             />
           </div>
