@@ -29,14 +29,27 @@ export default function PortfoliyoUser() {
         const plays = await playRes.json();
 
         const recentQuizzes = plays
-          .sort((a: any, b: any) => new Date(b.createdAt || b._id?.timestamp).getTime() - new Date(a.createdAt || a._id?.timestamp).getTime())
+          .sort((a: any, b: any) =>
+            new Date(b.createdAt || b._id?.timestamp).getTime() -
+            new Date(a.createdAt || a._id?.timestamp).getTime()
+          )
           .slice(0, 5)
-          .map((play: any) => ({
-            title: quizzes.find((q: any) => q._id === play.quizId || q._id?.$oid === play.quizId?.$oid)?.title || "Untitled Quiz",
-            date: new Date(play.createdAt || play._id?.timestamp).toLocaleDateString(),
-            score: `${play.score}/${play.total}`,
-            passed: play.pass,
-          }));
+          .map((play: any) => {
+            const playQuizId =
+              play.quizId?.toString?.() || play.quizId?.$oid || play.quizId;
+            const matchedQuiz = quizzes.find((q: any) => {
+              const quizId =
+                q._id?.toString?.() || q._id?.$oid || q._id;
+              return quizId === playQuizId;
+            });
+
+            return {
+              title: matchedQuiz?.title || "Untitled Quiz",
+              date: new Date(play.createdAt || play._id?.timestamp).toLocaleDateString(),
+              score: `${play.score}/${play.total}`,
+              passed: play.pass,
+            };
+          });
 
         setUserInfo(user);
         setStats({
