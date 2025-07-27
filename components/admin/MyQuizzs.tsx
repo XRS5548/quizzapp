@@ -38,11 +38,12 @@ import { LoaderThree } from "../ui/loader"
 import { toast } from "sonner"
 
 export type Quiz = {
+  _id:string
   id: string
   title: string
   description: string
   totalQuestions: number
-  createdAt: string
+  createdAt: string,
 }
 
 export function MyQuizzesTable() {
@@ -85,7 +86,7 @@ export function MyQuizzesTable() {
     if (dialogType === "delete") {
       const res = await fetch("/api/quiz/delete", {
         method: "POST",
-        body: JSON.stringify({ id: selectedQuiz.id }),
+        body: JSON.stringify({ id: selectedQuiz._id }),
         headers: { "Content-Type": "application/json" },
       })
       const data = await res.json()
@@ -106,7 +107,7 @@ export function MyQuizzesTable() {
       const res = await fetch("/api/quiz/edit", {
         method: "POST",
         body: JSON.stringify({
-          id: selectedQuiz.id,
+          id: selectedQuiz._id,
           title: updatedTitle,
           description: updatedDesc,
         }),
@@ -211,6 +212,7 @@ export function MyQuizzesTable() {
               <DropdownMenuItem className={""} inset={true}
                 onClick={() => {
                   setSelectedQuiz(quiz)
+                  console.log(quiz)
                   setDialogType("delete")
                 }}
               >
