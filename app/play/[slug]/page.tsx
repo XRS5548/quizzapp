@@ -94,7 +94,7 @@ export default function QuizPlayPage() {
         toast("Quiz Submitted", {
           description: result.message || "Your answers have been submitted!",
         })
-        router.push("/user/profoliyo")
+        router.push("/user/portfoliyo")
       }
 
       else {
