@@ -16,9 +16,7 @@ export async function GET(request : NextRequest){
     }
     
 
-    let quizzesData = (await quizzes.find({
-        userId :new ObjectId(cookies.get("id").value)
-    }).toArray()).toReversed();
+    let quizzesData = (await quizzes.find().toArray()).toReversed();
     quizzesData.map(qizz=>{
         qizz['id'] = qizz._id || "N/A"
         qizz['totalQuestions'] = qizz.questions.length || "N/A"
