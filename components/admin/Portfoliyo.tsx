@@ -119,7 +119,7 @@ export default function PortfoliyoUser() {
       <div>
         <h3 className="text-lg font-semibold mb-4">Recent Quizzes</h3>
         <div className="space-y-2">
-          {stats.recentQuizzes.map((quiz: any, i: number) => (
+          {stats.recentQuizzes.toReversed().map((quiz: any, i: number) => (
             <Card className={""} key={i}>
               <CardContent className="py-3 px-4 flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-2 sm:space-y-0">
                 <div className="space-y-1">
