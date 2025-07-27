@@ -165,7 +165,7 @@ export default function ProfileUser() {
             onSuccess={async (url: string) => {
               setProfile((prev) => ({ ...prev, image: url }));
 
-              await fetch("/api/updateprofileimage", {
+              await fetch("/api/updateprofile", {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ image: url }),
