@@ -7,6 +7,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Pencil, Save, X, Upload } from "lucide-react";
 import Cropper from "react-easy-crop";
 import Modal from "react-modal";
+import CropperButton from "../personal/CropperButton";
 
 export default function ProfileUser() {
   const [profile, setProfile] = useState({
@@ -158,20 +159,19 @@ export default function ProfileUser() {
           </div>
         </div>
         <div className="flex items-center gap-2">
-          <label htmlFor="upload-photo">
-            <input
-              type="file"
-              id="upload-photo"
-              className="hidden"
-              accept="image/*"
-              onChange={handleImageChange}
-            />
-            <Button className={""} variant="outline" size="sm" asChild>
-              <span className="flex items-center gap-2">
-                <Upload className="w-4 h-4" /> Change Photo
-              </span>
-            </Button>
-          </label>
+          <CropperButton
+            Varient="outline"
+            Text="Change Profile"
+            onSuccess={async (url: string) => {
+              setProfile((prev) => ({ ...prev, image: url }));
+
+              await fetch("/api/updateprofileimage", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ image: url }),
+              });
+            }}
+          />
         </div>
       </div>
 
@@ -248,7 +248,7 @@ export default function ProfileUser() {
           {editMode.bio ? (
             <div className="flex items-center gap-2">
               <Input className={""}
-              type={"text"}
+                type={"text"}
                 value={tempProfile.bio}
                 onChange={(e) =>
                   setTempProfile({ ...tempProfile, bio: e.target.value })
