@@ -53,7 +53,7 @@ export function MyQuizzesTable() {
 
   async function FetchQuizz() {
     setPageReady(false)
-    const url = "/api/quizzes"
+    const url = "/api/user-quizzes"
     const response = await fetch(url)
     const data = await response.json()
 
