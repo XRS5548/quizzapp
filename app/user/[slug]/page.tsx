@@ -34,7 +34,7 @@ const Logo = () => {
         animate={{ opacity: 1 }}
         className="font-medium whitespace-pre text-black dark:text-white"
       >
-        Acet Labs
+        Hi Quizz Dashboard
       </motion.span>
     </a>
   );
