@@ -24,8 +24,8 @@ export function Navbar2({ fname }) {
       link: "/quizs",
     },
     {
-      name: "Leader Board",
-      link: "/board",
+      name: "About Us",
+      link: "/about",
     },
   ];
 
